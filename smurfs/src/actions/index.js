@@ -35,3 +35,21 @@ export const getSmurfs = () => {
     })
   }
 }
+
+// POST (add a new smurf)
+export const addSmurf = (newSmurf) => {
+  return (dispatch) => {
+    dispatch({ type: LOADING });
+
+    axios
+    .post('http://localhost:3333/smurfs', newSmurf)
+    .then(response => {
+      dispatch({ type: GET_SMURFS, smurfs: response.data })
+    })
+    .catch(err => {
+      dispatch({ type: ERROR, errorMessage: 'There was a problem adding your smurf to the database.'})
+    })
+  }
+}
+
+
