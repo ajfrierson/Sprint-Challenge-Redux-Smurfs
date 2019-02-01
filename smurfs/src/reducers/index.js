@@ -26,20 +26,19 @@ import { LOADING, GET_SMURFS, ERROR } from '../actions';
 
 const initialState = {
   smurfs: [],
-  loading: '',
+  loading: false,
   error: ''
 }
 
-
 export default function (state = initialState, action) {
   switch(action.type) {
-    case LOADING: 
-      return Object.assign({}, state, {loading: true })
+    case LOADING:
+      return Object.assign({}, state, { loading: true })
     case GET_SMURFS:
-      return Object.assign({}, state, { smurfs: action.smurfs, loading: false})
+      return Object.assign({}, state, { smurfs: action.smurfs, loading: false })
     case ERROR:
-      return Object.assign({}, state, { error: action.errorMessage, loading: false})
+      return Object.assign({}, state, { error: action.errorMessage, loading: false })
     default:
-      return state   
+      return state
   }
 }
