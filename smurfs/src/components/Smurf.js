@@ -23,7 +23,7 @@ class Smurf extends React.Component {
         <h4>{this.props.smurf.height}</h4>
         {this.state.showEditForm ? <EditSmurf handleUpdate={this.props.handleUpdate} smurfID={this.props.smurf.id} toggleEditForm={this.toggleEditForm} />: null}
         <button type="button" onClick={this.toggleEditForm}>Edit Smurf</button>
-        <button type="button" onClick={() => {this.props.handleDelete(this.props.smurf.id)}}>Snuff Smurf</button>
+        <button type="button" onClick={() => {this.props.handleDelete(this.props.smurf.id)}}>Delete Smurf</button>
       </div>
     )
   }

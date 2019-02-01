@@ -58,6 +58,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>SMURFS! 2.0 W/ Redux</h1>
+        <h1>I made it through another week. To be continued...</h1>
         {this.props.fetching ? (
           <div>Loading...</div>
         ): <div>{<Smurfs smurfs={this.props.smurfs} handleUpdate={this.handleUpdate} handleDelete={this.handleDelete} />}</div>}
