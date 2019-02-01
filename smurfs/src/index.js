@@ -9,11 +9,11 @@ import { Provider } from 'react-redux';
 import rootReducer from  './reducers';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-const composeEnhancers = window._REDUX_DEVTOOLS_EXTENSION_COMPOSE_ || compose;
-const store = createStore(rootReducer, composeEnhancers(
-  applyMiddleware(logger, thunk)
-));
-
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer => composeEnhancers(
+    applyMiddleware(logger, thunk)
+  ));
+  
 ReactDOM.render(
   <Provider store={store}>
     <Router>
