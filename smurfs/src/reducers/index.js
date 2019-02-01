@@ -24,11 +24,12 @@
 
 import { LOADING, GET_SMURFS, ERROR } from '../actions';
 
-cost initialState = {
+const initialState = {
   smurfs: [],
   loading: '',
   error: ''
 }
+
 
 export default function (state = initialState, action) {
   switch(action.type) {
