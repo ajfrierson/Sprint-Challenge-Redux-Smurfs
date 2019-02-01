@@ -24,4 +24,9 @@
 
 import { LOADING, GET_SMURFS, ERROR } from '../actions';
 
+cost initialState = {
+  smurfs: [],
+  loading: '',
+  error: ''
+}
 
