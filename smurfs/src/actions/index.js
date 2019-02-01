@@ -52,4 +52,16 @@ export const addSmurf = (newSmurf) => {
   }
 }
 
-
+// DELETE (remove a smurf)
+export const deleteSmurf = (id) => {
+  return (dispatch) => {
+    axios
+    .delete(`http://localhost:3333/smurfs/${id}`)
+    .then(response => {
+      dispatch({ type: GET_SMURFS, smurfs: response.data})
+    })
+    .catch(err => {
+      dispatch({ type: ERROR, errorMessage: 'Problem deleting the smurf from the database.'})
+    })
+  }
+}
