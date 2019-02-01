@@ -9,14 +9,16 @@ import { Provider } from 'react-redux';
 import rootReducer from  './reducers';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-const store = createStore(
-  () => {}, // this is the most basic reducer. A function that returns and object. Replace it.
-  applyMiddleware(/* be sure to throw in the proper middlewares here*/)
-);
+const composeEnhancers = window._REDUX_DEVTOOLS_EXTENSION_COMPOSE_ || compose;
+const store = createStore(rootReducer, composeEnhancers(
+  applyMiddleware(logger, thunk)
+));
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
