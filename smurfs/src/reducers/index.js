@@ -22,4 +22,6 @@
   Components can then read your store as, `state` and not `state.fooReducer`.
 */
 
+import { LOADING, GET_SMURFS, ERROR } from '../actions';
+
 
