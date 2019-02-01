@@ -26,3 +26,23 @@ import '../index.css';
 
 // export default App;
 
+const App = props => {
+  return (
+    <div>
+      <div className='app-container'>
+        <div className='nav-bar'>
+          <div className='site-name'>
+            <h1>Smurfs 2.0</h1>
+          </div>
+          <div className='links'>
+            <Link to='/' style={{ textDecoration: 'none' }}>Home</Link>
+            <Link to='/add' style={{ textDecoration: 'none' }}>Add New Smurf</Link>
+          </div>
+        </div>
+      </div>
+      <Route path='/add' component={AddSmurfForm} />
+    </div>
+  );
+}
+
+export default App;
