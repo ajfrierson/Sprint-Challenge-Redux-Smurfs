@@ -1,48 +1,106 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Route, Link } from 'react-router-dom';
-import SmurfList from './SmurfList';
-import AddSmurfForm from './AddSmurfForm';
-import '../index.css';
+import {connect} from 'react-redux';
+import {fetchData, saveData, updateData, deleteData} from '../actions';
+import Smurfs from './Smurfs';
 
 /*
  to wire this component up you're going to need a few things.
- I'll let you do this part on your own. 
+ I'll let you do this part on your own.
  Just remember, `how do I `connect` my components to redux?`
  `How do I ensure that my component links the state to props?`
  */
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <h1>SMURFS! 2.0 W/ Redux</h1>
-//         <div>Welcome to your Redux version of Smurfs!</div>
-//         <div>Start inside of your `src/index.js` file!</div>
-//         <div>Have fun!</div>
-//       </div>
-//     );
-//   }
-// }
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      age: '',
+      height:''
+    }
+  }
 
-// export default App;
+  componentDidMount() {
+    this.props.fetchData();
+  }
 
-const App = props => {
-  return (
-    <div>
-      <div className='app-container'>
-        <div className='nav-bar'>
-          <div className='site-name'>
-            <h1>Smurfs 2.0</h1>
-          </div>
-          <div className='links'>
-            <Link to='/' style={{ textDecoration: 'none' }}>Home</Link>
-            <Link to='/add' style={{ textDecoration: 'none' }}>Add New Smurf</Link>
-          </div>
+  handleChange = e => {
+    this.setState({[e.target.name]: e.target.value})
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const newSmurf = {
+      name: this.state.name,
+      age: this.state.age,
+      height: this.state.height
+    }
+    this.props.saveData(newSmurf);
+    this.setState({name: '',
+    age: '',
+    height:''})
+  }
+
+  handleUpdate = (name, age, height, id) => {
+    const newEdits = {};
+    if (name.length > 0) newEdits.name = name;
+    if (age.length > 0) newEdits.age = age;
+    if (height.length > 0) newEdits.height = height;
+    this.props.updateData(id, newEdits);
+  }
+
+  handleDelete = (id) => {
+    this.props.deleteData(id);
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+        <h1>SMURFS! 2.0 W/ Redux</h1>
+        {this.props.fetching ? (
+          <div>Loading...</div>
+        ): <div>{<Smurfs smurfs={this.props.smurfs} handleUpdate={this.handleUpdate} handleDelete={this.handleDelete} />}</div>}
+        <h3></h3>
+        <div className="add-smurf">
+          <form className="af-form" onSubmit={this.handleSubmit}>
+            Name: <input
+            type="text"
+            placeholder="Name"
+            name="name"
+            value={this.state.name}
+            onChange={this.handleChange} className="as-input" />
+            <br/>
+            Age: <input
+            type="number"
+            placeholder="Age"
+            name="age"
+            value={this.state.age}
+            onChange={this.handleChange} className="as-input" />
+            <br/>
+            Height: <input
+            type="number"
+            placeholder="height"
+            name="height"
+            value={this.state.height}
+            onChange={this.handleChange} className="as-input" />
+            <button type="submit" className="addSmurf-button">Add Smurf</button>
+          </form>
         </div>
       </div>
-      <Route path='/add' component={AddSmurfForm} />
-    </div>
-  );
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    smurfs: state.smurfs,
+    fetching: state.fetchingSmurfs,
+    saving: state.addingSmurfs,
+    updating: state.updatingSmurf,
+    deleting: state.deletingSmurf,
+    test: state
+  }
+}
+
+export default connect(mapStateToProps, {fetchData, saveData, updateData, deleteData})(App);

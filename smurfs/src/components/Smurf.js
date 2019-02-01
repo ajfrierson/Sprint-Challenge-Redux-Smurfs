@@ -1,29 +1,32 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { deleteSmurf } from '../actions';
+import './App.css';
+import EditSmurf from './EditSmurf';
 
-const Smurf = props => {
-    const { smurf, deleteSmurf } = props;
-
-    const clickHandler = () => {
-        deleteSmurf(smurf.id)
+class Smurf extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showEditForm: false
     }
-    
+  }
+
+  toggleEditForm = () => {
+    this.setState({showEditForm: !this.state.showEditForm})
+  }
+
+
+  render() {
     return (
-        <div className="friend-container-outside">
-            <div className="friend-container-inside" key={smurf.id}>
-                <h2>{smurf.name}</h2>
-                <h4>{smurf.age}</h4>
-                <p>{smurf.height}</p>
-                <div className="action-row">
-                    {/* <Link to={`/update/${div.id}`}><button className="button button-outline">Update</button></Link> */}
-                    <button className="button button-clear" onClick={clickHandler}>Delete</button>
-                </div>
-            </div>
-        </div>
+      <div key={this.props.smurf.id}>
+        <h4>{this.props.smurf.name}</h4>
+        <h4>{this.props.smurf.age}</h4>
+        <h4>{this.props.smurf.height}</h4>
+        {this.state.showEditForm ? <EditSmurf handleUpdate={this.props.handleUpdate} smurfID={this.props.smurf.id} toggleEditForm={this.toggleEditForm} />: null}
+        <button type="button" onClick={this.toggleEditForm}>Edit Smurf</button>
+        <button type="button" onClick={() => {this.props.handleDelete(this.props.smurf.id)}}>Snuff Smurf</button>
+      </div>
     )
+  }
 }
 
-const mapStateToProps = () => ({});
-export default connect(mapStateToProps, { deleteSmurf })(Smurf)
+export default Smurf;
